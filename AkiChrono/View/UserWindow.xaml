@@ -7,7 +7,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
@@ -23,21 +23,48 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid Column="0" Row="0">
+        <Grid Column="0" Row="1">
             <Image Source="C:\Users\Kuba\source\repos\AkiChrono\AkiChrono\Resources\Pictures\sierra.jpg" />
         </Grid>
 
-        <TextBlock Text="Nalot pozostały: 2137h" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-        <TextBlock Text="Imie i nazwisko pilota: " Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
-        <TextBox Grid.Row="3" Grid.Column="0" Margin="10px" />
-        <DatePicker Grid.Row="4" Grid.Column="0" />
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="Podaj ilość zlatanych godzin:" />
-        <TextBox Grid.Row="6" Grid.Column="0" />
-        <Button Grid.Row="7" Grid.Column="0" Content="DODAJ" Margin="10px" />
+        <ComboBox
+            ItemsSource="{Binding Path=Planes}"
+            SelectedItem="{Binding SelectedPlane}"
+            Grid.Row="0"
+            Grid.Column="0">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock Text="Nalot sumaryczny: " Grid.Row="2" Grid.Column="0"
+                   Grid.ColumnSpan="2" />
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding SelectedPlane.TotalTime}" />
+        <TextBlock Text="Imie i nazwisko pilota: " Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" />
+        <TextBox Grid.Row="4" Grid.Column="0" Margin="10px" />
+        <DatePicker Grid.Row="5" Grid.Column="0" />
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Podaj ilość zlatanych godzin:" />
+        <TextBox Grid.Row="7" Grid.Column="0" />
+        <Button Grid.Row="8" Grid.Column="0" Content="DODAJ" Margin="10px" />
 
         <TextBlock Grid.Column="2" Grid.Row="0" Text="Ostatnie loty:" FontSize="16px" FontStyle="Italic" />
-        <TextBlock Grid.Row="1" Grid.Column="2" Text="02.08.2022 15:00 dodano 20 min  " />
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="02.08.2022 16:00 dodano 24 min  " />
-        <TextBlock Grid.Row="3" Grid.Column="2" Text="02.08.2022 17:00 dodano 25 min  " />
+        <ItemsControl Grid.RowSpan="7" Grid.Row="1" Grid.Column="2" ItemsSource="{Binding Path=LastRecords}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel >
+                        <TextBlock Text="Pilot: "/>
+                        <TextBlock Text="{Binding Pilot}" />
+                        <TextBlock Text="Dnia: "/>
+                        <TextBlock Text="{Binding DateAdded}" />
+                        <TextBlock Text="Dodał: "/>
+                        <TextBlock Text="{Binding TimeSum}" />
+                        <TextBlock/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
