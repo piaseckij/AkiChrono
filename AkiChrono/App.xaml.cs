@@ -1,8 +1,9 @@
 ﻿using System.Windows;
 using AkiChrono.Model;
+using AkiChrono.Services;
 using AkiChrono.Utils;
 using AkiChrono.Vievmodel;
-using SQLitePCL;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AkiChrono;
 
@@ -14,11 +15,12 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         var dbContext = new ChronoDbContext();
-        var dbSeeder = new DbSeeder(dbContext);
+        _ = new DbSeeder(dbContext);
+        var recordService = new DbService(dbContext);
 
         MainWindow = new MainWindow
         {
-            DataContext = new UserWindowViewmodel(dbContext)
+            DataContext = new UserWindowViewmodel(dbContext, recordService)
         };
 
         MainWindow.Show();

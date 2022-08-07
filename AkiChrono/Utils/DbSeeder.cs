@@ -63,7 +63,7 @@ public class DbSeeder
         };
     }
 
-    private List<Plane> GetPlanes()
+    private IEnumerable<Plane> GetPlanes()
     {
         return new List<Plane>
         {
