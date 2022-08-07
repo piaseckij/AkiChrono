@@ -1,4 +1,5 @@
 ﻿using System;
+using AkiChrono.Model;
 using AkiChrono.Model.Dtos;
 using FluentValidation;
 
@@ -6,7 +7,7 @@ namespace AkiChrono.Validators;
 
 public class UserInputValidator : AbstractValidator<UserInputDto>
 {
-    public UserInputValidator()
+    public UserInputValidator(Plane plane)
     {
         RuleFor(x => x.InputPilotName)
             .NotNull()
@@ -20,6 +21,7 @@ public class UserInputValidator : AbstractValidator<UserInputDto>
         RuleFor(x => x.InputFlightTimeSum)
             .NotNull()
             .NotEmpty()
-            .GreaterThan(TimeSpan.Zero);
+            .GreaterThan(plane.TotalTime)
+            .WithMessage("Suma PDT nie może być niższa od poprzedniej");
     }
 }

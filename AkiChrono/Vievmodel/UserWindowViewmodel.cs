@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using AkiChrono.Commands;
 using AkiChrono.Model;
 using AkiChrono.Model.Dtos;
 using AkiChrono.Services;
-using AkiChrono.Validators;
-using FluentValidation;
 
 namespace AkiChrono.Vievmodel;
 
@@ -97,6 +94,7 @@ public class UserWindowViewmodel : ViewmodelBase
     }
 
     public ICommand SubmitCommand => new SubmitCommand(this);
+    public ICommand ResetCommand => new ResetCommand(this);
 
     private List<Record> GetLastFlights()
     {
@@ -120,6 +118,7 @@ public class UserWindowViewmodel : ViewmodelBase
 
         _dbService.AddFlight(inputDto);
 
-        LastRecords = _context.Records.ToList();
+        LastRecords = LastRecords;
+        SelectedPlane = SelectedPlane;
     }
 }
